@@ -1,32 +1,32 @@
-#include "mod/MyMod.h"
+#include "mod/PrimordialCore.h"
 
 #include "ll/api/mod/RegisterHelper.h"
 
-namespace my_mod {
+namespace primordial_core {
 
-MyMod& MyMod::getInstance() {
-    static MyMod instance;
+PrimordialCore& PrimordialCore::getInstance() {
+    static PrimordialCore instance;
     return instance;
 }
 
-bool MyMod::load() {
+bool PrimordialCore::load() {
     getSelf().getLogger().debug("Loading...");
     // Code for loading the mod goes here.
     return true;
 }
 
-bool MyMod::enable() {
+bool PrimordialCore::enable() {
     getSelf().getLogger().debug("Enabling...");
     // Code for enabling the mod goes here.
     return true;
 }
 
-bool MyMod::disable() {
+bool PrimordialCore::disable() {
     getSelf().getLogger().debug("Disabling...");
     // Code for disabling the mod goes here.
     return true;
 }
 
-} // namespace my_mod
+} // namespace primordial_core
 
-LL_REGISTER_MOD(my_mod::MyMod, my_mod::MyMod::getInstance());
+LL_REGISTER_MOD(primordial_core::PrimordialCore, primordial_core::PrimordialCore::getInstance());
