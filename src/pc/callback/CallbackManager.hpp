@@ -1,3 +1,5 @@
+#pragma once
+
 #include <algorithm>
 #include <any>
 #include <functional>
@@ -86,7 +88,19 @@ class CallbackManager {
         register_impl<Args...>(name, std::move(f), p);
     }
 
+    CallbackManager()                                  = default;
+    ~CallbackManager()                                 = default;
+    CallbackManager(const CallbackManager&)            = delete;
+    CallbackManager& operator=(const CallbackManager&) = delete;
+    CallbackManager(CallbackManager&&)                 = delete;
+    CallbackManager& operator=(CallbackManager&&)      = delete;
+
 public:
+    static CallbackManager& getInstance() {
+        static CallbackManager instance;
+        return instance;
+    }
+
     template <typename Callable>
     void addCallback(const std::string& name, Callable&& cb, int priority = 0) {
         using traits = function_traits<std::decay_t<Callable>>;
