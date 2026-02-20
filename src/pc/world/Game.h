@@ -1,32 +1,39 @@
-#pragma once
+﻿#pragma once
 
 #include <vector>
+
+#ifdef PC_EXPORT
+#define PCAPI __declspec(dllexport)
+#else
+#define PCAPI __declspec(dllimport)
+#endif
 
 namespace primordial_core {
 
 class Game {
 private:
-    Game()                       = default;
-    ~Game()                      = default;
-    Game(const Game&)            = delete;
-    Game& operator=(const Game&) = delete;
-    Game(Game&&)                 = delete;
-    Game& operator=(Game&&)      = delete;
+    PCAPI Game()                       = default;
+    PCAPI ~Game()                      = default;
+    PCAPI Game(const Game&)            = delete;
+    PCAPI Game& operator=(const Game&) = delete;
+    PCAPI Game(Game&&)                 = delete;
+    PCAPI Game& operator=(Game&&)      = delete;
 
     static thread_local std::vector<bool> prevent_stack;
 
-public:
-    static Game& getInstance();
-
-    void preventDefault();
     bool _isDefaultPrevented() const;
+
+public:
+    PCAPI static Game& getInstance();
+
+    PCAPI void preventDefault();
 
     class EventScope {
     public:
-        EventScope();
-        ~EventScope();
+        PCAPI EventScope();
+        PCAPI ~EventScope();
 
-        bool isPrevented() const;
+        PCAPI bool isPrevented() const;
     };
 };
 

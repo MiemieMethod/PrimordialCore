@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <algorithm>
 #include <any>
@@ -11,6 +11,14 @@
 #include <tuple>
 #include <type_traits>
 #include <vector>
+
+#ifdef PC_EXPORT
+#define PCAPI __declspec(dllexport)
+#define PCAPI_TEMPLATE
+#else
+#define PCAPI          __declspec(dllimport)
+#define PCAPI_TEMPLATE extern
+#endif
 
 namespace primordial_core {
 
@@ -88,15 +96,15 @@ class CallbackManager {
         register_impl<Args...>(name, std::move(f), p);
     }
 
-    CallbackManager()                                  = default;
-    ~CallbackManager()                                 = default;
-    CallbackManager(const CallbackManager&)            = delete;
-    CallbackManager& operator=(const CallbackManager&) = delete;
-    CallbackManager(CallbackManager&&)                 = delete;
-    CallbackManager& operator=(CallbackManager&&)      = delete;
+    PCAPI CallbackManager()                                  = default;
+    PCAPI ~CallbackManager()                                 = default;
+    PCAPI CallbackManager(const CallbackManager&)            = delete;
+    PCAPI CallbackManager& operator=(const CallbackManager&) = delete;
+    PCAPI CallbackManager(CallbackManager&&)                 = delete;
+    PCAPI CallbackManager& operator=(CallbackManager&&)      = delete;
 
 public:
-    static CallbackManager& getInstance() {
+    PCAPI static CallbackManager& getInstance() {
         static CallbackManager instance;
         return instance;
     }

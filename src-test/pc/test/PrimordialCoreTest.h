@@ -4,12 +4,12 @@
 
 namespace primordial_core {
 
-class PrimordialCore {
+class PrimordialCoreTest {
 
 public:
-    static PrimordialCore& getInstance();
+    static PrimordialCoreTest& getInstance();
 
-    PrimordialCore() : mSelf(*ll::mod::NativeMod::current()) {}
+    PrimordialCoreTest() : mSelf(*ll::mod::NativeMod::current()) {}
 
     [[nodiscard]] ll::mod::NativeMod& getSelf() const { return mSelf; }
 
