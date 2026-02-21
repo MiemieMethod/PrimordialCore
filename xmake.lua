@@ -41,6 +41,13 @@ target("primordial-core") -- Change this to your mod name.
         add_includedirs("src-client")
         add_files("src-client/**.cpp")
     end
+    on_load(function (target)
+    
+        target:add("rules", "@levibuildscript/modpacker", {
+            dependencies = ""
+        })
+    
+        end)
 
 target("primordial-core-test") -- Change this to your mod name.
     add_rules("@levibuildscript/linkrule")
@@ -65,3 +72,10 @@ target("primordial-core-test") -- Change this to your mod name.
         add_includedirs("src-test-client")
         add_files("src-test-client/**.cpp")
     end
+    on_load(function (target)
+    
+        target:add("rules", "@levibuildscript/modpacker", {
+            dependencies = ",\n    \"dependencies\": [\n        {\"name\": \"primordial-core\"}\n    ]"
+        })
+    
+        end)
