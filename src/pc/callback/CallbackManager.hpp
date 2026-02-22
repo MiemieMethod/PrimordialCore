@@ -12,15 +12,10 @@
 #include <type_traits>
 #include <vector>
 
-#ifdef PC_EXPORT
-#define PCAPI __declspec(dllexport)
-#define PCAPI_TEMPLATE
-#else
-#define PCAPI          __declspec(dllimport)
-#define PCAPI_TEMPLATE extern
-#endif
+#include "pc/Macro.h"
+#include "pc/mod/PrimordialCore.h"
 
-namespace primordial_core {
+namespace pc {
 
 template <typename T>
 struct function_traits;
@@ -121,7 +116,7 @@ public:
         std::shared_lock lock(mutex);
         auto             it = events.find(name);
         if (it == events.end()) {
-            std::cerr << "Warning: Event '" << name << "' not found\n";
+            PrimordialCore::getLogger().debug("No valid callback is registered for '{}'", name);
             return;
         }
 
@@ -131,9 +126,9 @@ public:
             const auto& container = std::any_cast<const ListT&>(it->second);
             container.invoke(std::forward<Args>(args)...);
         } catch (const std::bad_any_cast&) {
-            std::cerr << "Error: Invoke arguments do not match stored signature for '" << name << "'\n";
+            PrimordialCore::getLogger().error("Invoke callback arguments do not match stored signature for '{}'", name);
         }
     }
 };
 
-} // namespace primordial_core
+} // namespace pc

@@ -2,13 +2,9 @@
 
 #include <vector>
 
-#ifdef PC_EXPORT
-#define PCAPI __declspec(dllexport)
-#else
-#define PCAPI __declspec(dllimport)
-#endif
+#include "pc/Macro.h"
 
-namespace primordial_core {
+namespace pc {
 
 class Game {
 private:
@@ -37,4 +33,4 @@ public:
     };
 };
 
-} // namespace primordial_core
+} // namespace pc

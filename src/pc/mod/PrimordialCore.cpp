@@ -1,10 +1,8 @@
-﻿#include "pc/mod/PrimordialCore.h"
-#include "pc/callback/CallbackManager.hpp"
-#include "pc/world/Game.h"
+﻿#include "ll/api/mod/RegisterHelper.h"
 
-#include "ll/api/mod/RegisterHelper.h"
+#include "pc/mod/PrimordialCore.h"
 
-namespace primordial_core {
+namespace pc {
 
 PrimordialCore& PrimordialCore::getInstance() {
     static PrimordialCore instance;
@@ -35,6 +33,6 @@ bool PrimordialCore::unload() {
     return true;
 }
 
-} // namespace primordial_core
+} // namespace pc
 
-LL_REGISTER_MOD(primordial_core::PrimordialCore, primordial_core::PrimordialCore::getInstance());
+LL_REGISTER_MOD(pc::PrimordialCore, pc::PrimordialCore::getInstance());

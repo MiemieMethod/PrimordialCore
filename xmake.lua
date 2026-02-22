@@ -33,20 +33,20 @@ target("primordial-core") -- Change this to your mod name.
     add_files("src/**.cpp")
     add_includedirs("src")
     if is_config("target_type", "server") then
+        add_defines("LL_PLAT_S")
         add_headerfiles("src-server/**.h", "src-server/**.hpp")
         add_includedirs("src-server")
         add_files("src-server/**.cpp")
     else
+        add_defines("LL_PLAT_C")
         add_headerfiles("src-client/**.h", "src-client/**.hpp")
         add_includedirs("src-client")
         add_files("src-client/**.cpp")
     end
     on_load(function (target)
-    
         target:add("rules", "@levibuildscript/modpacker", {
             dependencies = ""
         })
-    
         end)
 
 target("primordial-core-test") -- Change this to your mod name.
@@ -73,9 +73,7 @@ target("primordial-core-test") -- Change this to your mod name.
         add_files("src-test-client/**.cpp")
     end
     on_load(function (target)
-    
         target:add("rules", "@levibuildscript/modpacker", {
             dependencies = ",\n    \"dependencies\": [\n        {\"name\": \"primordial-core\"}\n    ]"
         })
-    
         end)

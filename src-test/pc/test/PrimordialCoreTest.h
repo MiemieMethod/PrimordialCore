@@ -2,7 +2,7 @@
 
 #include "ll/api/mod/NativeMod.h"
 
-namespace primordial_core {
+namespace pc {
 
 class PrimordialCoreTest {
 
@@ -31,4 +31,4 @@ private:
     ll::mod::NativeMod& mSelf;
 };
 
-} // namespace primordial_core
+} // namespace pc

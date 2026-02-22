@@ -4,7 +4,7 @@
 
 #include "ll/api/mod/RegisterHelper.h"
 
-namespace primordial_core {
+namespace pc {
 
 void Hooked_OriginalFunction(CallbackManager& mgr, int damage) {
     Game::EventScope scope;
@@ -109,6 +109,10 @@ bool PrimordialCoreTest::load() {
         getLogger().info("Outer scope prevented: {}", scope.isPrevented() ? "Yes" : "No");
     }
 
+    //mgr.addCallback("OnServerLevelTick", [](uint64 tick) { getLogger().info("OnServerLevelTick: {}", tick); });
+    //mgr.addCallback("OnClientLevelTick", [](uint64 tick) { getLogger().info("OnClientLevelTick: {}", tick); });
+    //mgr.addCallback("tick", []() { getLogger().info("tick"); });
+
     return true;
 }
 
@@ -130,6 +134,6 @@ bool PrimordialCoreTest::unload() {
     return true;
 }
 
-} // namespace primordial_core
+} // namespace pc
 
-LL_REGISTER_MOD(primordial_core::PrimordialCoreTest, primordial_core::PrimordialCoreTest::getInstance());
+LL_REGISTER_MOD(pc::PrimordialCoreTest, pc::PrimordialCoreTest::getInstance());

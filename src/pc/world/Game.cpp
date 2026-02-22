@@ -1,6 +1,6 @@
-#include "pc/world/Game.h"
+﻿#include "pc/world/Game.h"
 
-namespace primordial_core {
+namespace pc {
 
 thread_local std::vector<bool> Game::prevent_stack;
 
@@ -26,4 +26,4 @@ Game::EventScope::~EventScope() { Game::prevent_stack.pop_back(); }
 
 bool Game::EventScope::isPrevented() const { return Game::getInstance()._isDefaultPrevented(); }
 
-} // namespace primordial_core
+} // namespace pc
