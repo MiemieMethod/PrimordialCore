@@ -2,12 +2,14 @@
 
 #include "ll/api/mod/NativeMod.h"
 
+#include "pc/Macro.h"
+
 namespace pc {
 
 class PrimordialCore {
 
 public:
-    static PrimordialCore& getInstance();
+    PCAPI static PrimordialCore& getInstance();
 
     PrimordialCore() : mSelf(*ll::mod::NativeMod::current()) {}
 
