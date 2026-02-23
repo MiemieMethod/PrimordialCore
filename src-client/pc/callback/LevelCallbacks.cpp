@@ -14,7 +14,7 @@ LL_AUTO_TYPE_INSTANCE_HOOK(
     &::ClientInstance::$onLevelExit,
     void
 ) {
-    CallbackManager::getInstance().invokeCallback("OnClientLevelExit");
+    CallbackManager::getInstance().invokeCallback("LevelExit", true);
     return origin();
 }
 
@@ -25,6 +25,6 @@ LL_AUTO_TYPE_INSTANCE_HOOK(
     &::ClientInstance::$onLevelCorrupt,
     void
 ) {
-    CallbackManager::getInstance().invokeCallback("OnClientLevelCorrupt");
+    CallbackManager::getInstance().invokeCallback("LevelCorrupt", true);
     return origin();
 }

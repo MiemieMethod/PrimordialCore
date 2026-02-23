@@ -27,11 +27,7 @@ LL_AUTO_TYPE_INSTANCE_HOOK(
         ::std::unordered_map<::std::string, ::std::unique_ptr<::BiomeJsonDocumentGlue::ResolvedBiomeData>>>>
         biomeIdToResolvedData
 ) {
-    if (isClientSide()) {
-        CallbackManager::getInstance().invokeCallback("OnClientLevelInitialize", levelName);
-    } else {
-        CallbackManager::getInstance().invokeCallback("OnServerLevelInitialize", levelName);
-    }
+    CallbackManager::getInstance().invokeCallback("LevelInitialize", isClientSide(), uint64(levelId), levelName);
     return origin(levelName, levelSettings, experiments, levelId, biomeIdToResolvedData);
 }
 
@@ -44,13 +40,12 @@ LL_AUTO_TYPE_INSTANCE_HOOK(
 ) {
     {
         Game::EventScope scope;
+        CallbackManager::getInstance().invokeCallback("LevelTick", isClientSide(), getCurrentTick().tickID);
         if (isClientSide()) {
-            CallbackManager::getInstance().invokeCallback("OnClientLevelTick", getCurrentTick().tickID);
 #if defined(LL_PLAT_C)
             CallbackManager::getInstance().invokeCallback("tick");
 #endif
         } else {
-            CallbackManager::getInstance().invokeCallback("OnServerLevelTick", getCurrentTick().tickID);
 #if defined(LL_PLAT_S)
             CallbackManager::getInstance().invokeCallback("tick");
 #endif
@@ -71,11 +66,7 @@ LL_AUTO_TYPE_INSTANCE_HOOK(
     void,
     bool stopNetwork
 ) {
-    if (getLevel()->isClientSide()) {
-        CallbackManager::getInstance().invokeCallback("OnClientStartLeaveGame", stopNetwork);
-    } else {
-        CallbackManager::getInstance().invokeCallback("OnServerStartLeaveGame", stopNetwork);
-    }
+    CallbackManager::getInstance().invokeCallback("StartLeaveGame", getLevel()->isClientSide(), stopNetwork);
     return origin(stopNetwork);
 }
 
@@ -86,6 +77,6 @@ LL_AUTO_TYPE_INSTANCE_HOOK(
     &::ServerInstance::$onLevelCorrupt,
     void
 ) {
-    CallbackManager::getInstance().invokeCallback("OnServerLevelCorrupt");
+    CallbackManager::getInstance().invokeCallback("LevelCorrupt", false);
     return origin();
 }
