@@ -35,6 +35,11 @@ struct function_traits<R (C::*)(Args...) const> {
     using args_type = std::tuple<Args...>;
 };
 
+template <typename C, typename R, typename... Args>
+struct function_traits<R (C::*)(Args...)> {
+    using args_type = std::tuple<Args...>;
+};
+
 template <typename T>
 struct function_traits : public function_traits<decltype(&T::operator())> {};
 
@@ -86,7 +91,7 @@ class CallbackManager {
     }
 
     template <typename Callable, typename... Args>
-    void deduce_and_register(const std::string& name, Callable&& c, int p, std::tuple<Args...>) {
+    void deduce_and_register(const std::string& name, Callable&& c, int p, std::tuple<Args...>*) {
         std::function<void(Args...)> f = std::forward<Callable>(c);
         register_impl<Args...>(name, std::move(f), p);
     }
@@ -108,7 +113,7 @@ public:
     void addCallback(const std::string& name, Callable&& cb, int priority = 0) {
         using traits = function_traits<std::decay_t<Callable>>;
         using ArgsT  = typename traits::args_type;
-        deduce_and_register(name, std::forward<Callable>(cb), priority, ArgsT{});
+        deduce_and_register(name, std::forward<Callable>(cb), priority, (ArgsT*)nullptr);
     }
 
     template <typename... Args>
