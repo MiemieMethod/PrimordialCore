@@ -1,4 +1,4 @@
-﻿#include "mc/world/gamemode/InteractionResult.h"
+#include "mc/world/gamemode/InteractionResult.h"
 #include "mc/world/item/Item.h"
 #include "mc/world/item/ItemUsedOnEventContext.h"
 #include "mc/world/actor/Actor.h"
@@ -34,8 +34,8 @@ LL_AUTO_TYPE_INSTANCE_HOOK(
         entity.getLevel().isClientSide(),
         item.getFullNameHash().mStr,
         item.getAuxValue(),
-        *item.mUserData,
-        entity.getOrCreateUniqueID(),
+        std::ref(item.mUserData),
+        std::ref(entity.getOrCreateUniqueID()),
         x,
         y,
         z,

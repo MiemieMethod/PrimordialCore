@@ -1,8 +1,11 @@
-﻿#include "pc/test/PrimordialCoreTest.h"
-#include "pc/callback/CallbackManager.hpp"
-#include "pc/world/Game.h"
+#include "mc/nbt/CompoundTag.h"
+#include "mc/legacy/ActorUniqueID.h"
 
 #include "ll/api/mod/RegisterHelper.h"
+
+#include "pc/test/PrimordialCoreTest.h"
+#include "pc/callback/CallbackManager.hpp"
+
 
 namespace pc {
 
@@ -21,6 +24,25 @@ bool PrimordialCoreTest::load() {
         if (isClientSide) getLogger().info("OnClientLevelInitialize: {}, {}", levelId, levelName);
         else getLogger().info("OnServerLevelInitialize: {}, {}", levelId, levelName);
     });
+
+    mgr.addCallback(
+        "ItemUsedOn",
+        [](bool                                                 isClientSide,
+           std::string                                          name,
+           short                                                aux,
+           std::reference_wrapper<std::unique_ptr<CompoundTag>> userData,
+           std::reference_wrapper<const ActorUniqueID>          entity,
+           int,
+           int,
+           int,
+           uchar,
+           float,
+           float,
+           float,
+           bool) {
+            // getLogger().info("ItemOnUsedOnHook UserData: {}", uint64(&userData));
+        }
+    );
 
     return true;
 }
